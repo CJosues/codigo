@@ -1,0 +1,58 @@
+////Metodo De Biseccion Proyecto aplicado de Metodos Numericos
+//Nombre:Cesar Josue Sotz
+//Carnet:1990-21-3044
+
+
+import java.util.function.Function;
+
+public class BisectionSquareRoot {   ///clase utilizada
+
+  
+     
+    public static double equation(double x, double N) {
+        return Math.pow(x, 2) - N;   //funcion para encontrar la raiz de x
+    }
+
+    /**
+     * Implementación del método de bisección
+     */
+    public static double bisection(Function<Double, Double> func, double a, double b, double tol) {
+        // se comprueba si el metodo de  bisección es aplicable
+        if (func.apply(a) * func.apply(b) >= 0) {
+            System.out.println("El método de bisección falla.");
+            return Double.NaN;
+        }
+
+        double c = a;
+        
+        
+        // aca se Itera hasta que el valor sea menor que la tolerancia
+        while ((b - a) / 2.0 > tol) {
+            c = (a + b) / 2.0;  // 
+            // Si encontramos la raíz exacta
+            if (func.apply(c) == 0.0) {
+                break;
+            } 
+            // se imprime o muestra el nuevo  intervalo
+            else if (func.apply(a) * func.apply(c) < 0) {
+                b = c;
+            } else {
+                a = c;
+            }
+        }
+        return c;
+    }
+
+    public static void main(String[] args) {
+        double N = 845;  // Número a obtener la raiz
+        double tol = 1e-5;  // Tolerancia o iteraciones a realizar para la presicion
+
+        // intervalo inicial
+        double a = 0;
+        double b = N;
+
+        // Llamamos al método de bisección para encontrar la raíz cuadrada de N
+        double root = bisection(x -> equation(x, N), a, b, tol);
+        System.out.println("La raíz cuadrada aproximada de " + N + " es " + root);
+    }
+}
